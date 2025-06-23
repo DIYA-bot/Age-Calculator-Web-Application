@@ -16,7 +16,7 @@
         margin: 0;               /* This removes the default margin that browsers add, preventing unwanted space. */
         gap: 20px;               /* This adds a 20px space between the calculator box and the footer. */
       }
-      div {
+      div.header-box {
         text-align: center;
         border: none;
         background: linear-gradient(
@@ -141,22 +141,46 @@
             margin-top: 15px; /* Add some space above the button. */
         }
       }
-      h1{
-        background: linear-gradient(
-          to left,
-          rgb(61, 153, 239),
-          rgb(114, 114, 231)
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      }
+       h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, #0d2de1, #76defa,#700de1,#76defa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
       
+    }
+.typing-text {
+      font-size: 40px;
+      color: #78e2f2;
+      margin-top: 1px;
+      border-right: 2px solid #0277bd;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      display: inline-block;
+       background: linear-gradient(90deg, #0d2de1, #76defa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: typing 2s steps(10, end) forwards, blink 0.7s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 33ch }  /* Each character = 1ch unit for monospace-like effect */
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    } 
     </style>
   </head>
   <body>
-    <h1>Discover Your Exact Age – <p>Instantly!</p></h1>
-    <div>
+     <div >
+    <h1>Discover Your Exact Age</h1>
+    <p class="typing-text">Instantly!</p>
+  </div>
+    <div class="header-box">
       <p id="heading">Age Calculator</p>
       <form>
         <label for="dob">Date of Birth</label>
