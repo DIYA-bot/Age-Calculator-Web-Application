@@ -1,245 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- This line is crucial for responsiveness, ensuring the page scales correctly on all devices. -->
-    <title>Age Calculator</title>
-    <style>
-      body {
-        background: rgb(199, 211, 253);
-        /* --- Style changes for centering the content --- */
-        display: flex;           /* This enables Flexbox layout, a modern way to arrange items. */
-        flex-direction: column;  /* This stacks the calculator and the footer vertically. */
-        justify-content: center; /* This centers the content vertically on the page. */
-        align-items: center;     /* This centers the content horizontally on the page. */
-        min-height: 100vh;       /* This makes the body take up at least the full height of the browser window. */
-        margin: 0;               /* This removes the default margin that browsers add, preventing unwanted space. */
-        gap: 20px;               /* This adds a 20px space between the calculator box and the footer. */
-      }
-      div.header-box {
-        text-align: center;
-        border: none;
-        background: linear-gradient(
-          to right,
-          rgb(198, 212, 231),
-          rgb(171, 171, 227)
-        );
-        box-sizing: border-box;
-        height: 40vh;
-        width: 40vh;
-        max-width: 90vw;
-        /* The 'margin' property was removed from here because the flex properties on the 'body' now handle all centering. */
-        border-radius: 20px;
-        box-shadow: 5px 5px 10px rgb(206, 203, 233),
-          -5px -5px 10px rgba(13, 16, 48, 0.777);
-      }
-      #heading {
-        font-weight: bold;
-        color: rgb(213, 213, 237);
-        font-size: 20px;
-        padding: 15px 0 0 0;
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-      }
-      div form {
-        padding: 12px 3px;
-        margin: 0;
-      }
-
-      input[type="date"] {
-        border-radius: 5px;
-        height: 25px;
-        box-sizing: border-box;
-        border: none;
-        background: linear-gradient(
-          to right,
-          rgb(173, 201, 241),
-          rgb(171, 171, 227)
-        );
-        padding-left: 5px;
-        margin-left: 20px;
-
-        box-shadow: -5px -5px 10px rgba(11, 15, 58, 0.777),
-          5px 5px 10px rgb(206, 203, 233);
-      }
-      div button {
-        border-radius: 5px;
-        background: linear-gradient(
-          to right,
-          rgb(198, 212, 231),
-          rgb(171, 171, 227)
-        );
-        color: rgb(5, 5, 59);
-        box-sizing: border-box;
-        border: none;
-        padding: 5px 10px;
-        margin: 10px 0 0 0;
-        box-shadow: 6px 6px 10px rgb(206, 203, 233),
-          -5px -5px 10px rgba(11, 15, 58, 0.777);
-      }
-      div button:hover {
-        background: linear-gradient(
-          to right,
-          rgb(173, 201, 241),
-          rgb(171, 171, 227)
-        );
-        font-weight: bold;
-        color: rgb(6, 6, 151);
-      }
-      input:focus {
-        outline: none;
-        border-bottom: 2px solid rgb(182, 187, 245);
-      }
-      #result {
-        font-weight: bold;
-        font-size: 18px;
-        padding: 10px;
-        background: linear-gradient(
-          to left,
-          rgb(61, 153, 239),
-          rgb(114, 114, 231)
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      
-          footer {
-      text-align: center;
-      padding: 15px 10px;
-      font-size: 16px;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Age Calculator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-      /* --- Responsive Styles --- */
-      /* This is a media query. The styles inside will only apply if the screen width is 1024 pixels or less. */
-      /* This media query targets smaller tablets and large phones (768px width or less). */
-      @media (max-width: 768px) {
-        div {
-          /* The margin is no longer needed as the body's flex properties handle centering. */
-          width: 90vw; /* The width is set to 90% of the viewport width, making it flexible. */
-          height: auto; /* Height is set to 'auto' to allow the container to grow if content needs more space. */
-          padding: 20px 10px; /* Added some padding for better spacing inside the container. */
-        }
-      }
+    body {
+      background: rgb(199, 211, 253);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      gap: 20px;
+      font-family: sans-serif;
+      text-align: center;
+    }
 
-      /* This media query targets mobile phones (480px width or less). */
-      @media (max-width: 480px) {
-        div form {
-          display: flex; /* We use flexbox to have better control over the form layout. */
-          flex-direction: column; /* This stacks the form elements vertically. */
-          align-items: center; /* This centers the form elements. */
-          gap: 15px; /* This adds space between the form elements. */
-        }
-
-        div form br {
-          display: none; /* We hide the <br> tags because flexbox is now handling the spacing. */
-        }
-
-        input[type="date"] {
-          margin-left: 0; /* We remove the fixed left margin. */
-          width: 90%; /* The input fields will take up 90% of the container's width. */
-        }
-        div button {
-            margin-top: 15px; /* Add some space above the button. */
-        }
-      }
-       h1 {
-      font-size: 2.5rem;
-      background: linear-gradient(90deg, #0d2de1, #76defa,#700de1,#76defa);
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      background: linear-gradient(90deg, #0d2de1, #76defa, #700de1, #76defa);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-align: center;
-      
     }
-.typing-text {
-      font-size: 40px;
-      color: #78e2f2;
-      margin-top: 1px;
+
+    .typing-text {
+      font-size: clamp(1.2rem, 4vw, 2rem);
       border-right: 2px solid #0277bd;
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      width: 0;
-      display: inline-block;
-       background: linear-gradient(90deg, #0d2de1, #76defa);
+      background: linear-gradient(90deg, #0d2de1, #76defa);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: typing 2s steps(10, end) forwards, blink 0.7s step-end infinite;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 0;
+      animation: typing 2s steps(20, end) forwards, blink 0.7s step-end infinite;
     }
 
     @keyframes typing {
       from { width: 0 }
-      to { width: 33ch }  /* Each character = 1ch unit for monospace-like effect */
+      to { width: 33ch }
     }
 
     @keyframes blink {
       50% { border-color: transparent; }
-    } 
-    </style>
-  </head>
-  <body>
-     <div >
+    }
+
+    .header-box {
+      background: linear-gradient(to right, rgb(198, 212, 231), rgb(171, 171, 227));
+      border-radius: 20px;
+      padding: 20px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 5px 5px 10px rgb(206, 203, 233), -5px -5px 10px rgba(13, 16, 48, 0.777);
+    }
+
+    #heading {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: rgb(213, 213, 237);
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      margin-bottom: 10px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      max-width: 300px;
+      padding: 5px;
+      border: none;
+      border-radius: 5px;
+      background: linear-gradient(to right, rgb(173, 201, 241), rgb(171, 171, 227));
+      box-shadow: -5px -5px 10px rgba(11, 15, 58, 0.777), 5px 5px 10px rgb(206, 203, 233);
+    }
+
+    input:focus {
+      outline: none;
+      border-bottom: 2px solid rgb(182, 187, 245);
+    }
+
+    button {
+      border-radius: 5px;
+      background: linear-gradient(to right, rgb(198, 212, 231), rgb(171, 171, 227));
+      color: rgb(5, 5, 59);
+      border: none;
+      padding: 8px 15px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 6px 6px 10px rgb(206, 203, 233), -5px -5px 10px rgba(11, 15, 58, 0.777);
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, rgb(173, 201, 241), rgb(171, 171, 227));
+      font-weight: bold;
+      color: rgb(6, 6, 151);
+    }
+
+    #result {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-top: 10px;
+      background: linear-gradient(to left, rgb(61, 153, 239), rgb(114, 114, 231));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    footer {
+      font-size: 0.9rem;
+      padding: 15px 10px;
+      text-align: center;
+    }
+
+    /* Responsive improvements for small devices */
+    @media (max-width: 480px) {
+      .header-box {
+        padding: 15px;
+      }
+
+      input[type="date"] {
+        width: 90%;
+      }
+
+      button {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div>
     <h1>Discover Your Exact Age</h1>
     <p class="typing-text">Instantly!</p>
   </div>
-    <div class="header-box">
-      <p id="heading">Age Calculator</p>
-      <form>
-        <label for="dob">Date of Birth</label>
-        <input type="date" id="dob" name="dob" /><br /><br />
-        <label for="today">Current Date</label>
-        <input type="date" id="today" name="today" />
-      </form>
-      <button onclick="ageCalculate()">Calculate</button>
-      <p id="result"></p>
-    </div>
-<footer>
-    &copy; 2025 Diya Dutta.All rights reserved. 
-</footer>
-    <script>
-      // Set the "Current Date" input to today's date by default when the page loads.
-      document.getElementById("today").valueAsDate = new Date();
 
-      function ageCalculate() {
-        const birthday = document.getElementById("dob").value;
-        const todayValue = document.getElementById("today").value;
+  <div class="header-box">
+    <p id="heading">Age Calculator</p>
+    <form>
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" name="dob" />
+      <label for="today">Current Date</label>
+      <input type="date" id="today" name="today" />
+    </form>
+    <button onclick="ageCalculate()">Calculate</button>
+    <p id="result"></p>
+  </div>
 
-        if (!birthday) {
-          document.getElementById("result").innerHTML =
-            "Please select your date of birth.";
-          return;
-        }
-        if (!todayValue) {
-          document.getElementById("result").innerHTML =
-            "Please select the current date.";
-          return;
-        }
+  <footer>&copy; 2025 Diya Dutta. All rights reserved.</footer>
 
-        const dob = new Date(birthday);
-        const today = new Date(todayValue); // Use the date from the "Current Date" input
+  <script>
+    document.getElementById("today").valueAsDate = new Date();
 
-        let years = today.getFullYear() - dob.getFullYear();
-        let months = today.getMonth() - dob.getMonth();
-        let days = today.getDate() - dob.getDate();
+    function ageCalculate() {
+      const birthday = document.getElementById("dob").value;
+      const todayValue = document.getElementById("today").value;
 
-        if (days < 0) {
-          months--;
-          const previousMonth = new Date(
-            today.getFullYear(),
-            today.getMonth(),
-            0
-          ); // Calculate days in the previous month
-          days += previousMonth.getDate();
-        }
-
-        if (months < 0) {
-          years--;
-          months += 12;
-        }
-        document.getElementById(
-          "result"
-        ).innerText = `Your Age is ${years} years,${months} months and ${days} days...`;
+      if (!birthday) {
+        document.getElementById("result").innerHTML = "Please select your date of birth.";
+        return;
+      }
+      if (!todayValue) {
+        document.getElementById("result").innerHTML = "Please select the current date.";
+        return;
       }
 
-     
-    </script>
-  </body>
+      const dob = new Date(birthday);
+      const today = new Date(todayValue);
+
+      let years = today.getFullYear() - dob.getFullYear();
+      let months = today.getMonth() - dob.getMonth();
+      let days = today.getDate() - dob.getDate();
+
+      if (days < 0) {
+        months--;
+        const previousMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        days += previousMonth.getDate();
+      }
+
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+
+      document.getElementById("result").innerText = `Your Age is ${years} years, ${months} months, and ${days} days.`;
+    }
+  </script>
+</body>
 </html>
