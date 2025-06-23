@@ -2,11 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=form, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- This line is crucial for responsiveness, ensuring the page scales correctly on all devices. -->
     <title>Age Calculator</title>
     <style>
       body {
         background: rgb(199, 211, 253);
+        /* --- Style changes for centering the content --- */
+        display: flex;           /* This enables Flexbox layout, a modern way to arrange items. */
+        flex-direction: column;  /* This stacks the calculator and the footer vertically. */
+        justify-content: center; /* This centers the content vertically on the page. */
+        align-items: center;     /* This centers the content horizontally on the page. */
+        min-height: 100vh;       /* This makes the body take up at least the full height of the browser window. */
+        margin: 0;               /* This removes the default margin that browsers add, preventing unwanted space. */
+        gap: 20px;               /* This adds a 20px space between the calculator box and the footer. */
       }
       div {
         text-align: center;
@@ -20,7 +28,7 @@
         height: 40vh;
         width: 40vh;
         max-width: 90vw;
-        margin: 40px 250px;
+        /* The 'margin' property was removed from here because the flex properties on the 'body' now handle all centering. */
         border-radius: 20px;
         box-shadow: 5px 5px 10px rgb(206, 203, 233),
           -5px -5px 10px rgba(13, 16, 48, 0.777);
@@ -93,6 +101,47 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
+      
+          footer {
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 16px;
+    }
+
+      /* --- Responsive Styles --- */
+      /* This is a media query. The styles inside will only apply if the screen width is 1024 pixels or less. */
+      /* This media query targets smaller tablets and large phones (768px width or less). */
+      @media (max-width: 768px) {
+        div {
+          /* The margin is no longer needed as the body's flex properties handle centering. */
+          width: 90vw; /* The width is set to 90% of the viewport width, making it flexible. */
+          height: auto; /* Height is set to 'auto' to allow the container to grow if content needs more space. */
+          padding: 20px 10px; /* Added some padding for better spacing inside the container. */
+        }
+      }
+
+      /* This media query targets mobile phones (480px width or less). */
+      @media (max-width: 480px) {
+        div form {
+          display: flex; /* We use flexbox to have better control over the form layout. */
+          flex-direction: column; /* This stacks the form elements vertically. */
+          align-items: center; /* This centers the form elements. */
+          gap: 15px; /* This adds space between the form elements. */
+        }
+
+        div form br {
+          display: none; /* We hide the <br> tags because flexbox is now handling the spacing. */
+        }
+
+        input[type="date"] {
+          margin-left: 0; /* We remove the fixed left margin. */
+          width: 90%; /* The input fields will take up 90% of the container's width. */
+        }
+        div button {
+            margin-top: 15px; /* Add some space above the button. */
+        }
+      }
+      
     </style>
   </head>
   <body>
@@ -107,29 +156,45 @@
       <button onclick="ageCalculate()">Calculate</button>
       <p id="result"></p>
     </div>
-
+<footer>
+    &copy; 2025 Diya Dutta.All rights reserved. 
+</footer>
     <script>
+      // Set the "Current Date" input to today's date by default when the page loads.
+      document.getElementById("today").valueAsDate = new Date();
+
       function ageCalculate() {
         const birthday = document.getElementById("dob").value;
+        const todayValue = document.getElementById("today").value;
+
         if (!birthday) {
           document.getElementById("result").innerHTML =
-            "Please Select Date in Day-Month-Year Format";
+            "Please select your date of birth.";
           return;
         }
+        if (!todayValue) {
+          document.getElementById("result").innerHTML =
+            "Please select the current date.";
+          return;
+        }
+
         const dob = new Date(birthday);
-        const today = new Date();
+        const today = new Date(todayValue); // Use the date from the "Current Date" input
+
         let years = today.getFullYear() - dob.getFullYear();
         let months = today.getMonth() - dob.getMonth();
         let days = today.getDate() - dob.getDate();
+
         if (days < 0) {
           months--;
           const previousMonth = new Date(
             today.getFullYear(),
             today.getMonth(),
             0
-          ); //calculate previous month days
+          ); // Calculate days in the previous month
           days += previousMonth.getDate();
         }
+
         if (months < 0) {
           years--;
           months += 12;
@@ -138,6 +203,8 @@
           "result"
         ).innerText = `Your Age is ${years} years,${months} months and ${days} days...`;
       }
+
+     
     </script>
   </body>
 </html>
